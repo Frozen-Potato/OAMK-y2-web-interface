@@ -1,0 +1,800 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "open-store",
+    "version": "6.9",
+    "contact": {
+      "name": "Pham Gia Kien",
+      "email": "mcfkcoding@gmail.com"
+    },
+    "description": "A store used to sell and buy things"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/users/register": {
+      "parameters": [],
+      "post": {
+        "summary": "",
+        "operationId": "users-register",
+        "description": "Create account with username and password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              },
+              "examples": {}
+            }
+          },
+          "description": "Send username and password"
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "",
+        "operationId": "users-login",
+        "responses": {
+          "200": {
+            "description": "Token : \"Your token\""
+          }
+        },
+        "description": "Login using username and password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Login using existing username and password"
+        }
+      }
+    },
+    "/items": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "All listed items :",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Items",
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {}
+                  },
+                  "properties": {
+                    "itemId": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "images": {
+                      "type": "array",
+                      "format": "binary",
+                      "uniqueItems": true,
+                      "maxItems": 4,
+                      "minItems": 0,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "price": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "postDate": {
+                      "type": "string",
+                      "format": "time"
+                    },
+                    "contactNumber": {
+                      "type": "number"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "itemId",
+                    "title",
+                    "category",
+                    "location",
+                    "images",
+                    "price",
+                    "postDate",
+                    "contactNumber",
+                    "description"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-items",
+        "description": "Get all listed items",
+        "requestBody": {}
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-items",
+        "responses": {
+          "200": {
+            "description": "Items has been successfully created!"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "JWT token",
+            "required": true,
+            "description": "Authenticate Token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Items",
+                "type": "object",
+                "x-examples": {
+                  "example-1": {}
+                },
+                "properties": {
+                  "itemId": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "images": {
+                    "type": "array",
+                    "format": "binary",
+                    "uniqueItems": true,
+                    "maxItems": 4,
+                    "minItems": 0,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "price": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "postDate": {
+                    "type": "string",
+                    "format": "time"
+                  },
+                  "contactNumber": {
+                    "type": "number"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "itemId",
+                  "title",
+                  "category",
+                  "location",
+                  "images",
+                  "price",
+                  "postDate",
+                  "contactNumber",
+                  "description"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/items/{itemID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "itemID",
+          "in": "path",
+          "required": true,
+          "description": "Get item with inputed id"
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "Item with ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Items",
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {}
+                  },
+                  "properties": {
+                    "itemId": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "images": {
+                      "type": "array",
+                      "format": "binary",
+                      "uniqueItems": true,
+                      "maxItems": 4,
+                      "minItems": 0,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "price": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "postDate": {
+                      "type": "string",
+                      "format": "time"
+                    },
+                    "contactNumber": {
+                      "type": "number"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "itemId",
+                    "title",
+                    "category",
+                    "location",
+                    "images",
+                    "price",
+                    "postDate",
+                    "contactNumber",
+                    "description"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-items-itemID",
+        "description": "Get an items by id"
+      },
+      "put": {
+        "summary": "",
+        "operationId": "put-items-itemID",
+        "responses": {
+          "200": {
+            "description": "item has been modifited "
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Items",
+                "type": "object",
+                "x-examples": {
+                  "example-1": {}
+                },
+                "properties": {
+                  "itemId": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "images": {
+                    "type": "array",
+                    "format": "binary",
+                    "uniqueItems": true,
+                    "maxItems": 4,
+                    "minItems": 0,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "price": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "postDate": {
+                    "type": "string",
+                    "format": "time"
+                  },
+                  "contactNumber": {
+                    "type": "number"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "itemId",
+                  "title",
+                  "category",
+                  "location",
+                  "images",
+                  "price",
+                  "postDate",
+                  "contactNumber",
+                  "description"
+                ]
+              }
+            }
+          },
+          "description": ""
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Jwt token",
+            "required": true,
+            "description": "Authenticate Token"
+          }
+        ]
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-items-itemID",
+        "responses": {
+          "200": {
+            "description": "Item has been deleted"
+          }
+        },
+        "description": "Delete item",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Jwt token",
+            "description": "Authenticate Token",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/categories/{category}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "category",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "Items with category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Items",
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {}
+                  },
+                  "properties": {
+                    "itemId": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "images": {
+                      "type": "array",
+                      "format": "binary",
+                      "uniqueItems": true,
+                      "maxItems": 4,
+                      "minItems": 0,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "price": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "postDate": {
+                      "type": "string",
+                      "format": "time"
+                    },
+                    "contactNumber": {
+                      "type": "number"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "itemId",
+                    "title",
+                    "category",
+                    "location",
+                    "images",
+                    "price",
+                    "postDate",
+                    "contactNumber",
+                    "description"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-categories-category",
+        "description": "get all post by category"
+      }
+    },
+    "/locations/{location}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "location",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "Items with inputed location",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Items",
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {}
+                  },
+                  "properties": {
+                    "itemId": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "images": {
+                      "type": "array",
+                      "format": "binary",
+                      "uniqueItems": true,
+                      "maxItems": 4,
+                      "minItems": 0,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "price": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "postDate": {
+                      "type": "string",
+                      "format": "time"
+                    },
+                    "contactNumber": {
+                      "type": "number"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "itemId",
+                    "title",
+                    "category",
+                    "location",
+                    "images",
+                    "price",
+                    "postDate",
+                    "contactNumber",
+                    "description"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-locations-location",
+        "description": "Items with inputed location"
+      }
+    },
+    "/dates/{date}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "date",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "Items with inputted date",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Items",
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {}
+                  },
+                  "properties": {
+                    "itemId": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "images": {
+                      "type": "array",
+                      "format": "binary",
+                      "uniqueItems": true,
+                      "maxItems": 4,
+                      "minItems": 0,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "price": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "postDate": {
+                      "type": "string",
+                      "format": "time"
+                    },
+                    "contactNumber": {
+                      "type": "number"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "itemId",
+                    "title",
+                    "category",
+                    "location",
+                    "images",
+                    "price",
+                    "postDate",
+                    "contactNumber",
+                    "description"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-dates-date",
+        "description": "Items with inputted date"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Items": {
+        "title": "Items",
+        "type": "object",
+        "x-examples": {
+          "example-1": {}
+        },
+        "properties": {
+          "itemId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": {
+            "type": "string"
+          },
+          "category": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "location": {
+            "type": "string"
+          },
+          "images": {
+            "type": "array",
+            "format": "binary",
+            "uniqueItems": true,
+            "maxItems": 4,
+            "minItems": 0,
+            "items": {
+              "type": "string"
+            }
+          },
+          "price": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "postDate": {
+            "type": "string",
+            "format": "time"
+          },
+          "contactNumber": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "itemId",
+          "title",
+          "category",
+          "location",
+          "images",
+          "price",
+          "postDate",
+          "contactNumber",
+          "description"
+        ]
+      },
+      "Users": {
+        "title": "Users",
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "Username": {
+            "type": "string"
+          },
+          "Password": {
+            "type": "string",
+            "format": "password"
+          }
+        },
+        "required": [
+          "Id",
+          "Username",
+          "Password"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "JWT Token": {
+        "name": "JasonWebToken",
+        "type": "apiKey",
+        "in": "query"
+      }
+    }
+  }
+}
